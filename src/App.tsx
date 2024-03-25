@@ -1,24 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+
+interface toDoItems {
+  id: number;
+  text: string;
+  completed: boolean;
+}
 
 function App() {
+  const [inputValue, setInputValue] = useState<string>("");
+  const [todo, setTodo] = useState<toDoItems[]>([]);
+
+  const handleInputChamge = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    console.log(inputValue);
+  };
+
+  const addToDoList = () => {
+    if (inputValue !== "") {
+      const newTodo = {
+        id: Date.now(),
+        text: inputValue,
+        completed: false,
+      };
+      setTodo([...todo, newTodo]);
+      console.log(todo);
+    }
+  };
+
+  const handleDeleteTodo = (id: number) => {
+    setTodo(todo.filter((todo) => todo.id !== id));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <input
+          className="input"
+          type="text"
+          placeholder="write here ..."
+          onChange={handleInputChamge}
+        />
+        <button type="submit" onClick={addToDoList}>
+          add
+        </button>
+
+        <ul>
+          {todo.map((item) => (
+            <li key={item.id}>
+              <span
+                style={{
+                  textDecoration: item.completed ? "line-through" : "none",
+                }}
+              >
+                {item.text}
+              </span>
+              <button onClick={() => handleDeleteTodo(item.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
