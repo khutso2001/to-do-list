@@ -1,7 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 
-interface toDoItems {
+interface todoItems {
   id: number;
   text: string;
   completed: boolean;
@@ -9,53 +9,62 @@ interface toDoItems {
 
 function App() {
   const [inputValue, setInputValue] = useState<string>("");
-  const [todo, setTodo] = useState<toDoItems[]>([]);
-
-  const handleInputChamge = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [toDolist, setToDoList] = useState<todoItems[]>([]);
+  const handleInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
     console.log(inputValue);
   };
 
   const addToDoList = () => {
     if (inputValue !== "") {
-      const newTodo = {
+      const newToDo: todoItems = {
         id: Date.now(),
         text: inputValue,
         completed: false,
       };
-      setTodo([...todo, newTodo]);
-      console.log(todo);
+      setToDoList([...toDolist, newToDo]);
+      console.log(toDolist);
     }
   };
 
   const handleDeleteTodo = (id: number) => {
-    setTodo(todo.filter((todo) => todo.id !== id));
+    const filteredTodos = toDolist.filter((todo) => todo.id !== id);
+    setToDoList(filteredTodos);
   };
 
+  const handleToggle = (id: number) => {
+    const changeToggle = toDolist.map((todo) =>
+      todo.id == id ? { ...todo, completed: !todo.completed } : todo
+    );
+    setToDoList(changeToggle);
+  };
   return (
     <div className="App">
-      <div>
-        <input
-          className="input"
-          type="text"
-          placeholder="write here ..."
-          onChange={handleInputChamge}
-        />
-        <button type="submit" onClick={addToDoList}>
-          add
-        </button>
-
-        <ul>
-          {todo.map((item) => (
-            <li key={item.id}>
-              <span
-                style={{
-                  textDecoration: item.completed ? "line-through" : "none",
-                }}
-              >
-                {item.text}
-              </span>
-              <button onClick={() => handleDeleteTodo(item.id)}>Delete</button>
+      <div className="toDoList">
+        <div>
+          <input onChange={handleInputValue} className="todoInput" />
+          <button type="submit" className="addButton" onClick={addToDoList}>
+            add
+          </button>
+        </div>
+        <ul className="toDoItem">
+          {toDolist.map((todo) => (
+            <li className="toDoItemLi" key={todo.id}>
+              <p>{todo.text}</p>
+              <li>
+                <input
+                  className="Checkbox"
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => handleToggle(todo.id)}
+                />
+                <button
+                  className="deleteButton"
+                  onClick={() => handleDeleteTodo(todo.id)}
+                >
+                  Delete
+                </button>
+              </li>
             </li>
           ))}
         </ul>
