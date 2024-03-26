@@ -5,47 +5,4 @@
     flex-direction: column;
     align-items: center;
 }
-.toDoItem{
-    list-style-type: none;
-    padding: 0;
-}
-.toDoList ul li{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.toDoItemLi{
-    border-bottom: 1px solid #dadbdc;
 
-}
-.addButton{
-    width: 5rem;
-    height: 2.5rem;
-    margin-left: 1rem;
-    background-color: #20EEB0;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-    color: white;
-}
-.deleteButton{
-    width: 4rem;
-    height: 2rem;
-    background-color: #FF4545;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-    color: white;
-    margin: 10px;
-}
-.todoInput{
-    height: 2.5rem;
-    width: 16rem;
-    border: none;
-    background: #EBEFF2;
-    border-radius: 5px;
-}
-input.Checkbox {
-    width: 20px;
-    height: 20px;
-}

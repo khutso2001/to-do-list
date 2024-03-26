@@ -1,7 +1,8 @@
 import "./App.css";
 import { useState } from "react";
-
-interface todoItems {
+import Input from "./components/input";
+import ToDoItem from "./components/ToDoItem";
+export interface todoItems {
   id: number;
   text: string;
   completed: boolean;
@@ -41,33 +42,12 @@ function App() {
   return (
     <div className="App">
       <div className="toDoList">
-        <div>
-          <input onChange={handleInputValue} className="todoInput" />
-          <button type="submit" className="addButton" onClick={addToDoList}>
-            add
-          </button>
-        </div>
-        <ul className="toDoItem">
-          {toDolist.map((todo) => (
-            <li className="toDoItemLi" key={todo.id}>
-              <p>{todo.text}</p>
-              <li>
-                <input
-                  className="Checkbox"
-                  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => handleToggle(todo.id)}
-                />
-                <button
-                  className="deleteButton"
-                  onClick={() => handleDeleteTodo(todo.id)}
-                >
-                  Delete
-                </button>
-              </li>
-            </li>
-          ))}
-        </ul>
+        <Input handleInputValue={handleInputValue} addToDoList={addToDoList} />
+        <ToDoItem
+          toDolist={toDolist}
+          handleToggle={handleToggle}
+          handleDeleteTodo={handleDeleteTodo}
+        />
       </div>
     </div>
   );
